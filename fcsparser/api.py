@@ -556,3 +556,18 @@ def parse(path, meta_data_only=False, compensate=False, channel_naming='$PnS',
         df = fcs_parser.dataframe
         df = df.astype(dtype) if dtype else df
         return meta, df
+if __name__ == "__main__":
+    import pathlib
+
+    test_dir = pathlib.Path("../").joinpath("test")
+
+    test_files = test_dir.glob("*.fcs")
+    for file in test_files:
+        pr = FCSParser(read_data=False)
+        with open(file, 'rb') as binfile:
+            buff = BytesIO(binfile.read())
+
+        parsed = pr.from_data(buff.getvalue())
+
+        print(parsed.annotation)
+
