@@ -300,7 +300,11 @@ class FCSParser(object):
         keys = text.keys()
 
         if '$MODE' not in text or text['$MODE'] != 'L':
-            raise ParserFeatureNotImplementedError(u'Mode not implemented')
+            if('$Mode' in text):
+                mode_type = text['MODE']
+            else:
+                mode_type = "Not Found"
+            raise ParserFeatureNotImplementedError(u'Mode not implemented: {}'.format(mode_type))
 
         if '$P0B' in keys:
             raise ParserFeatureNotImplementedError(u'Not expecting a parameter starting at 0')
